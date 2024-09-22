@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(kwin4_effect_shapecorners VERSION 0.6.2 LANGUAGES CXX)
+project(kwin_effect_luminvert VERSION 0.6.2 LANGUAGES CXX)
 
 include(cmake/default-vars.cmake)
 
@@ -20,7 +20,8 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 find_package(KF${QT_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED COMPONENTS ConfigWidgets)
 
 if(${QT_MAJOR_VERSION} EQUAL 6)
-    find_package(KF${QT_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED COMPONENTS KCMUtils)
+    find_package(KF${QT_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED
+        COMPONENTS KCMUtils GlobalAccel I18n XmlGui)
     find_package(KWin REQUIRED COMPONENTS kwineffects)
     message(STATUS "Found KWin Version: ${KWin_VERSION}")
 else()

@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/effects/luminvert/">
+  <file>shaders/luminvert.frag</file>
+  <file>shaders/luminvert_core.frag</file>
+</qresource>
+</RCC>

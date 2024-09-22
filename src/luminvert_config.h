@@ -16,11 +16,11 @@ class KShortcutsEditor;
 namespace KWin
 {
 
-class InvertEffectConfig : public KCModule
+class LumInvertEffectConfig : public KCModule
 {
     Q_OBJECT
 public:
-    explicit InvertEffectConfig(QObject *parent, const KPluginMetaData &data);
+    explicit LumInvertEffectConfig(QObject *parent, const KPluginMetaData &data);
 
 public Q_SLOTS:
     void save() override;

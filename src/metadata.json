@@ -96,7 +96,7 @@
         "Name[zh_CN]": "颜色反相",
         "Name[zh_TW]": "反轉"
     },
-    "X-KDE-ConfigModule": "kwin_invert_config",
+    "X-KDE-ConfigModule": "kwin_luminvert_config",
     "org.kde.kwin.effect": {
         "video": "https://files.kde.org/plasma/kwin/effect-videos/invert.mp4"
     }

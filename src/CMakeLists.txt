@@ -1,15 +1,19 @@
 #######################################
 # Effect
 
-set(invert_SOURCES
-    invert.cpp
-    invert.qrc
+set(luminvert_SOURCES
+    luminvert.cpp
+    luminvert.qrc
     main.cpp
 )
 
-kwin_add_builtin_effect(invert ${invert_SOURCES})
-target_link_libraries(invert PRIVATE
-    kwin
+# kconfig_add_kcfg_files(luminvert_SOURCES Config.kcfgc)
+kcoreaddons_add_plugin(
+    kwin_effect_luminvert
+    SOURCES ${luminvert_SOURCES}
+    INSTALL_NAMESPACE "kwin/effects/plugins/")
+target_link_libraries(kwin_effect_luminvert PRIVATE
+    KWin::kwin
 
     KF6::GlobalAccel
     KF6::I18n
@@ -17,17 +21,30 @@ target_link_libraries(invert PRIVATE
 
 #######################################
 # Config
-if (KWIN_BUILD_KCMS)
-    set(kwin_invert_config_SRCS invert_config.cpp)
 
-    kwin_add_effect_config(kwin_invert_config ${kwin_invert_config_SRCS})
+set(kwin_luminvert_config_SRCS luminvert_config.cpp)
 
-    target_link_libraries(kwin_invert_config
-        KF6::KCMUtils
-        KF6::CoreAddons
-        KF6::GlobalAccel
-        KF6::I18n
-        KF6::XmlGui
-        KWinEffectsInterface
+if(${QT_MAJOR_VERSION} EQUAL 6)
+    qt6_add_dbus_interface(kwin_luminvert_config_SRCS ${KWIN_EFFECTS_INTERFACE} kwineffects_interface)
+    kcoreaddons_add_plugin(
+        kwin_luminvert_config
+        INSTALL_NAMESPACE "kwin/effects/configs"
+        SOURCES ${kwin_luminvert_config_SRCS})
+
+    target_link_libraries(kwin_luminvert_config
+            Qt${QT_MAJOR_VERSION}::CorePrivate
+            KF${QT_MAJOR_VERSION}::KCMUtils
     )
-endif()
+else()
+    qt5_add_dbus_interface(kwin_luminvert_config_SRCS ${KWIN_EFFECTS_INTERFACE} kwineffects_interface)
+    kcoreaddons_add_plugin(kwin_luminvert_config INSTALL_NAMESPACE "kwin/effects/configs" SOURCES ${kcm_SRCS})
+endif ()
+
+target_link_libraries(kwin_luminvert_config
+    Qt${QT_MAJOR_VERSION}::DBus
+    KF6::KCMUtils
+    KF6::CoreAddons
+    KF6::GlobalAccel
+    KF6::I18n
+    KF6::XmlGui
+)

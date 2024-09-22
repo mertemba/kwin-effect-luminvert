@@ -18,14 +18,14 @@ namespace KWin
 class GLShader;
 
 /**
- * Inverts desktop's colors
+ * LumInverts desktop's colors
  */
-class InvertEffect : public OffscreenEffect
+class LumInvertEffect : public OffscreenEffect
 {
     Q_OBJECT
 public:
-    InvertEffect();
-    ~InvertEffect() override;
+    LumInvertEffect();
+    ~LumInvertEffect() override;
 
     bool isActive() const override;
     bool provides(Feature) override;
@@ -44,9 +44,9 @@ protected:
     bool loadData();
 
 private:
-    bool isInvertable(EffectWindow *window) const;
-    void invert(EffectWindow *window);
-    void uninvert(EffectWindow *window);
+    bool isLumInvertable(EffectWindow *window) const;
+    void luminvert(EffectWindow *window);
+    void unluminvert(EffectWindow *window);
 
     bool m_inited;
     bool m_valid;
@@ -55,7 +55,7 @@ private:
     QList<EffectWindow *> m_windows;
 };
 
-inline int InvertEffect::requestedEffectChainPosition() const
+inline int LumInvertEffect::requestedEffectChainPosition() const
 {
     return 99;
 }

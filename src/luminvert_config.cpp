@@ -7,7 +7,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "invert_config.h"
+#include "luminvert_config.h"
 #include <kwineffects_interface.h>
 
 #include <QAction>
@@ -20,12 +20,12 @@
 
 #include <QVBoxLayout>
 
-K_PLUGIN_CLASS(KWin::InvertEffectConfig)
+K_PLUGIN_CLASS(KWin::LumInvertEffectConfig)
 
 namespace KWin
 {
 
-InvertEffectConfig::InvertEffectConfig(QObject *parent, const KPluginMetaData &data)
+LumInvertEffectConfig::LumInvertEffectConfig(QObject *parent, const KPluginMetaData &data)
     : KCModule(parent, data)
 {
     QVBoxLayout *layout = new QVBoxLayout(widget());
@@ -34,14 +34,14 @@ InvertEffectConfig::InvertEffectConfig(QObject *parent, const KPluginMetaData &d
     KActionCollection *actionCollection = new KActionCollection(widget(), QStringLiteral("kwin"));
     actionCollection->setComponentDisplayName(i18n("KWin"));
 
-    QAction *a = actionCollection->addAction(QStringLiteral("Invert"));
-    a->setText(i18n("Toggle Invert Effect"));
+    QAction *a = actionCollection->addAction(QStringLiteral("LumInvert"));
+    a->setText(i18n("Toggle LumInvert Effect"));
     a->setProperty("isConfigurationAction", true);
     KGlobalAccel::self()->setDefaultShortcut(a, QList<QKeySequence>() << (Qt::CTRL | Qt::META | Qt::Key_I));
     KGlobalAccel::self()->setShortcut(a, QList<QKeySequence>() << (Qt::CTRL | Qt::META | Qt::Key_I));
 
-    QAction *b = actionCollection->addAction(QStringLiteral("InvertWindow"));
-    b->setText(i18n("Toggle Invert Effect on Window"));
+    QAction *b = actionCollection->addAction(QStringLiteral("LumInvertWindow"));
+    b->setText(i18n("Toggle LumInvert Effect on Window"));
     b->setProperty("isConfigurationAction", true);
     KGlobalAccel::self()->setDefaultShortcut(b, QList<QKeySequence>() << (Qt::CTRL | Qt::META | Qt::Key_U));
     KGlobalAccel::self()->setShortcut(b, QList<QKeySequence>() << (Qt::CTRL | Qt::META | Qt::Key_U));
@@ -52,14 +52,14 @@ InvertEffectConfig::InvertEffectConfig(QObject *parent, const KPluginMetaData &d
     layout->addWidget(mShortcutEditor);
 }
 
-void InvertEffectConfig::load()
+void LumInvertEffectConfig::load()
 {
     KCModule::load();
 
     setNeedsSave(false);
 }
 
-void InvertEffectConfig::save()
+void LumInvertEffectConfig::save()
 {
     KCModule::save();
 
@@ -69,10 +69,10 @@ void InvertEffectConfig::save()
     OrgKdeKwinEffectsInterface interface(QStringLiteral("org.kde.KWin"),
                                          QStringLiteral("/Effects"),
                                          QDBusConnection::sessionBus());
-    interface.reconfigureEffect(QStringLiteral("invert"));
+    interface.reconfigureEffect(QStringLiteral("luminvert"));
 }
 
-void InvertEffectConfig::defaults()
+void LumInvertEffectConfig::defaults()
 {
     mShortcutEditor->allDefault();
 
@@ -81,6 +81,6 @@ void InvertEffectConfig::defaults()
 
 } // namespace
 
-#include "invert_config.moc"
+#include "luminvert_config.moc"
 
-#include "moc_invert_config.cpp"
+#include "moc_luminvert_config.cpp"
