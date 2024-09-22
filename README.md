@@ -1,12 +1,14 @@
 # kwin-effect-luminvert
 
-KWin Desktop Effect to invert the luminance of window contents.
+KWin Desktop Effect to invert the luminance of window contents while preserving colors.
 
-This has been developed for Plasma 6, but could probably be backported to Plasma 5.
+This is similar to the official `Invert` effect, but it preserves the colors by inverting the luminance in the YCbCr color space.
+
+![screenshots comparing built-in Invert effect with LumInvert effect](screenshots.png)
 
 ## Installation
 
-On Arch Linux, you can install the package `kwin-effect-luminvert-git` from the AUR.
+On Arch Linux, you can install the package [`kwin-effect-luminvert-git` from the AUR](https://aur.archlinux.org/packages/kwin-effect-luminvert-git).
 
 Otherwise install manually:
 
@@ -18,9 +20,9 @@ sudo cmake --install build
 
 ## Compatibility
 
-This has been tested on KWin 6.1.5.
-
-It still works when HDR is enabled, however the colors get distorted.
+This has been tested on Plasma 6 with KWin 6.1.5 (it could probably be backported to Plasma 5).
+It is compatible with other effects such as wobbly windows.
+It still works when HDR is enabled, however the colors get distorted sometimes.
 
 ## License
 
