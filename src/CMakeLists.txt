@@ -32,7 +32,7 @@ if(${QT_MAJOR_VERSION} EQUAL 6)
         SOURCES ${kwin_luminvert_config_SRCS})
 
     target_link_libraries(kwin_luminvert_config
-            Qt${QT_MAJOR_VERSION}::CorePrivate
+            Qt${QT_MAJOR_VERSION}::Core
             KF${QT_MAJOR_VERSION}::KCMUtils
     )
 else()
