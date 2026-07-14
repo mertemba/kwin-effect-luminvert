@@ -39,24 +39,23 @@ LumInvertEffect::LumInvertEffect()
     , m_allWindows(false)
 {
     QAction *a = new QAction(this);
+    a->setAutoRepeat(false);
     a->setObjectName(QStringLiteral("LumInvert"));
     a->setText(i18n("Toggle LumInvert Effect"));
-    KGlobalAccel::self()->setDefaultShortcut(a, QList<QKeySequence>() << (Qt::CTRL | Qt::META | Qt::Key_I));
-    KGlobalAccel::self()->setShortcut(a, QList<QKeySequence>() << (Qt::CTRL | Qt::META | Qt::Key_I));
+    KGlobalAccel::self()->setGlobalShortcut(a, QKeySequence(Qt::CTRL | Qt::META | Qt::Key_I));
     connect(a, &QAction::triggered, this, &LumInvertEffect::toggleScreenInversion);
 
     QAction *b = new QAction(this);
+    b->setAutoRepeat(false);
     b->setObjectName(QStringLiteral("LumInvertWindow"));
     b->setText(i18n("Toggle LumInvert Effect on Window"));
-    KGlobalAccel::self()->setDefaultShortcut(b, QList<QKeySequence>() << (Qt::CTRL | Qt::META | Qt::Key_U));
-    KGlobalAccel::self()->setShortcut(b, QList<QKeySequence>() << (Qt::CTRL | Qt::META | Qt::Key_U));
+    KGlobalAccel::self()->setGlobalShortcut(b, QKeySequence(Qt::CTRL | Qt::META | Qt::Key_U));
     connect(b, &QAction::triggered, this, &LumInvertEffect::toggleWindow);
 
     QAction *c = new QAction(this);
     c->setObjectName(QStringLiteral("LumInvert Screen Colors"));
     c->setText(i18n("LumInvert Screen Colors"));
-    KGlobalAccel::self()->setDefaultShortcut(c, QList<QKeySequence>());
-    KGlobalAccel::self()->setShortcut(c, QList<QKeySequence>());
+    KGlobalAccel::self()->setGlobalShortcut(c, QList<QKeySequence>());
     connect(c, &QAction::triggered, this, &LumInvertEffect::toggleScreenInversion);
 
     connect(effects, &EffectsHandler::windowAdded, this, &LumInvertEffect::slotWindowAdded);
@@ -80,6 +79,9 @@ void LumInvertEffect::luminvert(EffectWindow *window)
     if (m_valid && !m_inited) {
         m_valid = loadData();
     }
+    if (!m_valid) {
+        return;
+    }
 
     redirect(window);
     setShader(window, m_shader.get());
@@ -96,7 +98,7 @@ bool LumInvertEffect::loadData()
     m_inited = true;
 
     m_shader = ShaderManager::instance()->generateShaderFromFile(ShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/luminvert/shaders/luminvert.frag"));
-    if (!m_shader->isValid()) {
+    if (!m_shader) {
         qCCritical(KWIN_LUMINVERT) << "The shader failed to load!";
         return false;
     }

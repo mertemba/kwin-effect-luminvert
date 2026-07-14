@@ -1,10 +1,14 @@
+#version 140
+
 #include "colormanagement.glsl"
 #include "saturation.glsl"
 
 uniform sampler2D sampler;
 uniform vec4 modulation;
 
-varying vec2 texcoord0;
+in vec2 texcoord0;
+
+out vec4 fragColor;
 
 // RGB to YCbCr, ranges [0, 1]
 vec3 rgb_to_ycbcr(vec3 rgb) {
@@ -26,7 +30,7 @@ vec3 ycbcr_to_rgb(vec3 yuv) {
 
 void main()
 {
-    vec4 tex = texture2D(sampler, texcoord0);
+    vec4 tex = texture(sampler, texcoord0);
     tex = sourceEncodingToNitsInDestinationColorspace(tex);
     tex = adjustSaturation(tex);
 
@@ -43,5 +47,5 @@ void main()
     tex.rgb *= tex.a;
     tex = encodingToNits(tex, gamma22_EOTF, 0.0, destinationReferenceLuminance);
 
-    gl_FragColor = nitsToDestinationEncoding(tex);
+    fragColor = nitsToDestinationEncoding(tex);
 }
