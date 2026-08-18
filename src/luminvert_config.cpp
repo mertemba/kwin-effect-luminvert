@@ -37,14 +37,12 @@ LumInvertEffectConfig::LumInvertEffectConfig(QObject *parent, const KPluginMetaD
     QAction *a = actionCollection->addAction(QStringLiteral("LumInvert"));
     a->setText(i18n("Toggle LumInvert Effect"));
     a->setProperty("isConfigurationAction", true);
-    KGlobalAccel::self()->setDefaultShortcut(a, QList<QKeySequence>() << (Qt::CTRL | Qt::META | Qt::Key_I));
-    KGlobalAccel::self()->setShortcut(a, QList<QKeySequence>() << (Qt::CTRL | Qt::META | Qt::Key_I));
+    KGlobalAccel::self()->setGlobalShortcut(a, QKeySequence(Qt::CTRL | Qt::META | Qt::Key_I));
 
     QAction *b = actionCollection->addAction(QStringLiteral("LumInvertWindow"));
     b->setText(i18n("Toggle LumInvert Effect on Window"));
     b->setProperty("isConfigurationAction", true);
-    KGlobalAccel::self()->setDefaultShortcut(b, QList<QKeySequence>() << (Qt::CTRL | Qt::META | Qt::Key_U));
-    KGlobalAccel::self()->setShortcut(b, QList<QKeySequence>() << (Qt::CTRL | Qt::META | Qt::Key_U));
+    KGlobalAccel::self()->setGlobalShortcut(b, QKeySequence(Qt::CTRL | Qt::META | Qt::Key_U));
 
     mShortcutEditor = new KShortcutsEditor(actionCollection, widget(),
                                            KShortcutsEditor::GlobalAction, KShortcutsEditor::LetterShortcutsDisallowed);
